@@ -102,28 +102,33 @@ def scrape_experience(section, driver):
         split_url = curr_url.split("/")
         # if the company is listed in LinkedIn
 
-        # THIS FOR SOME REASON NOT WORKING -- TO DO LATER 
-        overview = "N/A"
+        # MY SLIGHT EDIT, original code assumes every company has an overview. 
+        overview = "No Company Overview Available."
         if "company" in split_url:
             company_index = split_url.index("company")
             company_name = str(split_url[company_index + 1])
             about_url = "https://www.linkedin.com/company/" + company_name + "/about/"
             driver.get(about_url)
             soup = BeautifulSoup(driver.page_source, 'html.parser')
-            print(soup.find("p", {"class": "break-words white-space-pre-wrap t-black--light text-body-medium"}))
-            if soup.find("p", {"class": "break-words white-space-pre-wrap t-black--light text-body-medium"}):
+            try:
                 overview = soup.find("p", {"class": "break-words white-space-pre-wrap t-black--light text-body-medium"}).text
+            except:
+                overview = "No Company Overview Available."
+            print(overview)
+            #if soup.find("p", {"class": "break-words white-space-pre-wrap t-black--light text-body-medium"}):
+                #overview = soup.find("p", {"class": "break-words white-space-pre-wrap t-black--light text-body-medium"}).text
         return overview
     
+        #ORIGNAL CODE GIVEN TO ME
         #if "company" in split_url:
-         #   company_index = split_url.index("company")
-         ##   company_name = str(split_url[company_index + 1])
+        #    company_index = split_url.index("company")
+        #    company_name = str(split_url[company_index + 1])
          #   about_url = "https://www.linkedin.com/company/" + company_name + "/about/"
-         #   driver.get(about_url)
-         #   soup = BeautifulSoup(driver.page_source, 'html.parser')
-         #   overview = soup.find("p", {"class": "break-words white-space-pre-wrap t-black--light text-body-medium"}).text
+        #    driver.get(about_url)
+        #    soup = BeautifulSoup(driver.page_source, 'html.parser')
+        #    overview = soup.find("p", {"class": "break-words white-space-pre-wrap t-black--light text-body-medium"}).text
         #else:
-          #  overview = "N/A"
+        #    overview = "N/A"
         #return overview
 
 
@@ -205,7 +210,7 @@ def main(userLink):
     driver = webdriver.Chrome()
     login(driver)
 
-    time.sleep(5) # Rate limited - allowing time for manual captcha solving 
+    time.sleep(10) # Rate limited - allowing time for manual captcha solving 
     #url = sys.argv[-1]  # get profile url from node.js
     #print(url)
     #urls = [url.get_attribute('href') for url in driver.find_elements(By.TAG_NAME, 'a')]

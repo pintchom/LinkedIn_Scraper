@@ -43,7 +43,7 @@ function App() {
             <div key={key}>
               <h2>{key}</h2>
               {Array.isArray(response[key]) && Array.isArray(response[key][0]) ? response[key].map((group, index) => (
-                <div key={index}>
+                <div key={index} style={{marginBottom: '45px'}}>
                   {group.map((item, i) => i === 0 ? <li key={i}>{item}</li> : <p key={i}>{item}</p>)}
                 </div>
               )) : <p>{JSON.stringify(response[key])}</p>}
