@@ -110,9 +110,22 @@ def scrape_experience(section, driver):
             about_url = "https://www.linkedin.com/company/" + company_name + "/about/"
             driver.get(about_url)
             soup = BeautifulSoup(driver.page_source, 'html.parser')
+            print(soup.find("p", {"class": "break-words white-space-pre-wrap t-black--light text-body-medium"}))
             if soup.find("p", {"class": "break-words white-space-pre-wrap t-black--light text-body-medium"}):
                 overview = soup.find("p", {"class": "break-words white-space-pre-wrap t-black--light text-body-medium"}).text
         return overview
+    
+        #if "company" in split_url:
+         #   company_index = split_url.index("company")
+         ##   company_name = str(split_url[company_index + 1])
+         #   about_url = "https://www.linkedin.com/company/" + company_name + "/about/"
+         #   driver.get(about_url)
+         #   soup = BeautifulSoup(driver.page_source, 'html.parser')
+         #   overview = soup.find("p", {"class": "break-words white-space-pre-wrap t-black--light text-body-medium"}).text
+        #else:
+          #  overview = "N/A"
+        #return overview
+
 
     if section.find("div", {"class": "pvs-list__footer-wrapper"}):
         temp_sec = section.find("div", {"class": "pvs-list__footer-wrapper"})
