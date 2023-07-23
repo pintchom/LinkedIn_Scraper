@@ -37,7 +37,9 @@ function App() {
         <input type="text" onChange={getData} />
         <button onClick={sendData}>Submit</button>
       </div>
-      {loading ? <h1>Loading...</h1> : response && 
+      {loading ? <h1>Loading...</h1> : 
+        response?.error ? <h1>{response.error}</h1> :
+        response && 
         <div style={{textAlign: 'left', paddingLeft: '40px'}}>
           {["Name", "Title", "Location", "About", "Experiences", "Education", "Recommendation"].map(key => (
             <div key={key}>
