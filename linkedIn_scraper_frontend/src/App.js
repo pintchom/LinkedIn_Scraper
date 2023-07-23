@@ -1,6 +1,7 @@
-import logo from './logo.svg'
+//import logo from './logo.svg'
 import './App.css'
 import React, {useState} from 'react'
+import axios from 'axios'
 
 
 function App() {
@@ -11,15 +12,13 @@ function App() {
 
   async function sendData() {
     setLoading(true); // "Loading..." displayed after link submitted and before response arrives from backend
-    const response = await fetch('http://127.0.0.1:5000/link', { // calling POST req via fetch to flask - local port 5000
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
+    const response = await axios.post('http://127.0.0.1:5000/link', {data: data}, { // calling POST req via fetch to flask - local port 5000
+        headers: {
+          'Content-Type': 'application/json'
       },
-      body: JSON.stringify({data: data}) // posting link submitted to backend
     });
 
-    const responseBody = await response.json(); // when response comes in from scraper...
+    const responseBody = response.data; // when response comes in from scraper...
     setLoading(false); // loading finishes ...
     setResponse(responseBody); //response set to post req response ...
     console.log(responseBody); //logged
