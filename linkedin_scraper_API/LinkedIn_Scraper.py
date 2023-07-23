@@ -43,7 +43,17 @@ def login(driver):  # Thanks to someone code at Tract
 
 # In[3]:
 
+'''New code checks for input link errors'''
+def scrape_topCard(section):
+    try:
+        name = section.find("h1", {"class": "text-heading-xlarge"}).text.strip()  # subject name
+        title = section.find("div", {"class": "text-body-medium"}).text.strip()  # subject title description
+        location = section.find_all("span", {"class": "text-body-small"})[-1].text.strip()  # Subject location
+    except AttributeError:
+        raise ValueError("Invalid LinkedIn profile link")
+    return name, title, location
 
+''' ORIGINAL CODE 
 def scrape_topCard(section):
     name = section.find(
         "h1", {"class": "text-heading-xlarge"}).text.strip()  # subject name
@@ -53,7 +63,7 @@ def scrape_topCard(section):
         "span", {"class": "text-body-small"})[-1].text.strip()  # Subject location
 
     return name, title, location
-
+'''
 
 # In[4]:
 
@@ -222,7 +232,10 @@ def main(userLink):
     #^none of this needed since URL provided in frontend
 
     url = userLink
-    driver.get(url)
+    try:
+        driver.get(url)
+    except Exception as e:
+        return {"error": "Bad Link, Try Again"}
 
     #When frontend done -- change url code after logging in accessing url from written frontend url . Simply need to write url to file and read line[0] and make url = link provided 
     '''
