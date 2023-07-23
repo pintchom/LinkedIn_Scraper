@@ -13,7 +13,7 @@ def create_user():
         accountData = json.loads(accountData)  # temp storage of scraper output
         return jsonify(accountData), 200  # POST request response 
     except Exception as e:
-        return jsonify({"error": "Bad Link, Try Again"}), 500
+        return jsonify({"error": "Error, Try Again"}), 500
 
 if __name__ == '__main__':
     app.run(debug = True) 

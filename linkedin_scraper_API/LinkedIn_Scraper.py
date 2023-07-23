@@ -235,7 +235,7 @@ def main(userLink):
     try:
         driver.get(url)
     except Exception as e:
-        return {"error": "Bad Link, Try Again"}
+        return {"error": "Error, Try Again"}
 
     #When frontend done -- change url code after logging in accessing url from written frontend url . Simply need to write url to file and read line[0] and make url = link provided 
     '''
