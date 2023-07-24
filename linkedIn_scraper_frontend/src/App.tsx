@@ -10,16 +10,20 @@ const App: React.FC = () => {
 
   const sendData = async () => {
     setLoading(true);
-    const response = await axios.post('http://127.0.0.1:5000/link', { data: data }, {
+    axios.post('http://127.0.0.1:5000/link', { data: data }, {
       headers: {
         'Content-Type': 'application/json'
       },
+    }).then((response) => {
+      const responseBody = response.data;
+      setLoading(false);
+      setResponse(responseBody);
+      console.log(responseBody);
+    }).catch((error) => {
+      setLoading(false);
+      console.error('Error:', error);
+      setResponse({error: "Bad Link Try Again"});
     });
-
-    const responseBody = response.data;
-    setLoading(false);
-    setResponse(responseBody);
-    console.log(responseBody);
   };
 
   const getData = (val: any) => {
